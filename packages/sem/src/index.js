@@ -660,15 +660,16 @@
   		value[p] = props[p]
   	}
   	this.Apply = function () {
-  		var array;
-  		if (Array.isArray(arguments[0])) array = arguments[0];
-  		else array = arguments;
-  		for (var prop in value) {
-  			for (var i = 0; i < array.length; i++) {
-  				$(array[i])[prop] = value[prop]
-  			}
-  		}
-  	}
+    	var array;
+    	if (Array.isArray(arguments[0])) array = arguments[0];
+    	else array = arguments;
+    	for (var i = 0; i < array.length; i++) {
+    		for (var prop in value) {
+    			$(array[i])[prop] = value[prop]
+    		}
+    		if (value.callback) value.callback($(array[i]))
+    	}
+    };
   }
 
   return {$:$,Template:Template};
