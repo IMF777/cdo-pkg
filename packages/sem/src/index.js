@@ -222,7 +222,13 @@
   			setParent(id, v)
   		},
   		set children(v) {
-  			setParent(v, id)
+        if (typeof v === "string"){
+  			  setParent(v, id)
+        } else {
+          v.forEach(function(elt){
+            setParent(elt, id);
+          })
+        }
   		},
   		set html(v) {
   			innerHTML(id, v)
