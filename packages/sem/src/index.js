@@ -131,19 +131,47 @@
   		set size(v) {
   			setProperty(id, "height", v[0]);
   			setProperty(id, "width", v[1])
-  		},
+      },
   		get x() {
   			return getProperty(id, "x")
   		},
-  		set x(v) {
-  			setProperty(id, "x", v)
-  		},
-  		get y() {
-  			return getProperty(id, "y")
-  		},
-  		set y(v) {
-  			setProperty(id, "y", v)
-  		},
+      set x(v) {
+      	if (returnObject.minX !== false && returnObject.maxX !== false && v > returnObject.minX && v < returnObject.maxX) {
+      		setProperty(id, "x", v)
+      	} else {
+      		if (returnObject.minX === false && v < returnObject.maxX) {
+      			setProperty(id, "x", v)
+      		}
+      		if (returnObject.maxX === false && v > returnObject.minX) {
+      			setProperty(id, "x", v)
+      		}
+      		if (returnObject.maxX === false && returnObject.minX === false) {
+      			setProperty(id, "x", v)
+      		}
+      	}
+      },
+      get y() {
+      	return getProperty(id, "y")
+      },
+      set y(v) {
+      	if (returnObject.minY !== false && returnObject.maxY !== false && v > returnObject.minY && v < returnObject.maxY) {
+      		setProperty(id, "y", v)
+      	} else {
+      		if (returnObject.minY === false && v < returnObject.maxY) {
+      			setProperty(id, "y", v)
+      		}
+      		if (returnObject.maxY === false && v > returnObject.minY) {
+      			setProperty(id, "y", v)
+      		}
+      		if (returnObject.maxY === false && returnObject.minY === false) {
+      			setProperty(id, "y", v)
+      		}
+      	}
+      },
+      minX:false,
+      maxX:false,
+      minY:false,
+      maxY:false,
   		get position() {
   			return [getProperty(id, "x"), getProperty(id, "y")]
   		},
