@@ -590,6 +590,50 @@
       		elt.alignParentX(parent, "left", x);
       		elt.alignParentY(parent, "bottom", y)
       	}
+      },
+      rateX: 10,
+      speedX: 1,
+      rateY: 10,
+      speedY: 1,
+      velocityX: function (dis, f) {
+      	var index = 0;
+      	var t = timedLoop(returnObject.rateX, function () {
+      		if (dis > 0) {
+      			index += returnObject.speedX;
+      			returnObject.x += returnObject.speedX;
+      			if (index >= dis) {
+      				stopTimedLoop(t);
+      				if (f) f()
+      			}
+      		} else {
+      			index -= returnObject.speedX;
+      			returnObject.x -= returnObject.speedX;
+      			if (index <= dis) {
+      				stopTimedLoop(t);
+      				if (f) f()
+      			}
+      		}
+      	})
+      },
+      velocityY: function (dis, f) {
+      	var index = 0;
+      	var t = timedLoop(returnObject.rateY, function () {
+      		if (dis > 0) {
+      			index += returnObject.speedY;
+      			returnObject.y += returnObject.speedY;
+      			if (index >= dis) {
+      				stopTimedLoop(t);
+      				if (f) f()
+      			}
+      		} else {
+      			index -= returnObject.speedY;
+      			returnObject.y -= returnObject.speedY;
+      			if (index <= dis) {
+      				stopTimedLoop(t);
+      				if (f) f()
+      			}
+      		}
+      	})
       }
   	};
   	returnObject.mousedown = function (e) {
