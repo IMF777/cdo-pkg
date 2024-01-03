@@ -595,7 +595,7 @@
       speedX: 1,
       rateY: 10,
       speedY: 1,
-      velocityX: function (dis, f) {
+      moveX: function (dis, f) {
       	var index = 0;
       	var t = timedLoop(returnObject.rateX, function () {
       		if (dis > 0) {
@@ -615,7 +615,7 @@
       		}
       	})
       },
-      velocityY: function (dis, f) {
+      moveY: function (dis, f) {
       	var index = 0;
       	var t = timedLoop(returnObject.rateY, function () {
       		if (dis > 0) {
