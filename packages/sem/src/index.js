@@ -432,7 +432,165 @@
   			} else {
   				return false
   			}
-  		}
+  		},
+      alignX: function (position, offset) {
+      	var elt = returnObject;
+      	var o = offset ? offset : 0;
+      	switch (position) {
+      	case "center":
+      		elt.x = 160 + o - elt.width / 2;
+      		break;
+      	case "left":
+      		elt.x = 0 + o;
+      		break;
+      	case "right":
+      		elt.x = 320 + o - elt.width
+      	}
+      },
+      alignY: function (position, offset) {
+      	var elt = returnObject;
+      	var o = offset ? offset : 0;
+      	switch (position) {
+      	case "center":
+      		elt.y = 225 + o - elt.height / 2;
+      		break;
+      	case "top":
+      		elt.y = 0 + o;
+      		break;
+      	case "bottom":
+      		elt.y = 445 + o - elt.height
+      	}
+      },
+      align: function (position, offsetX, offsetY) {
+      	var x = offsetX ? offsetX : 0;
+      	var y = offsetY ? offsetY : 0;
+      	var elt = returnObject;
+      	switch (position) {
+      	case "center":
+      		elt.alignX("center", x);
+      		elt.alignY("center", y);
+      		break;
+      	case "center-right":
+      	case "right-center":
+      		elt.alignX("right", x);
+      		elt.alignY("right", y);
+      		break;
+      	case "center-left":
+      	case "left-center":
+      		elt.alignX("left", x);
+      		elt.alignY("center", y);
+      		break;
+      	case "center-top":
+      	case "top-center":
+      		elt.alignX("center", x);
+      		elt.alignY("top", y);
+      		break;
+      	case "center-bottom":
+      	case "bottom-center":
+      		elt.alignX("center", x);
+      		elt.alignY("bottom", y);
+      		break;
+      	case "top-right":
+      	case "right-top":
+      		elt.alignX("right", x);
+      		elt.alignY("top", y);
+      		break;
+      	case "top-left":
+      	case "left-top":
+      		elt.alignX("left", x);
+      		elt.alignY("top", y);
+      		break;
+      	case "bottom-right":
+      	case "right-bottom":
+      		elt.alignX("right", x);
+      		elt.alignY("bottom", y);
+      		break;
+      	case "bottom-left":
+      	case "left-bottom":
+      		elt.alignX("left", x);
+      		elt.alignY("bottom", y)
+      	}
+      },
+      alignParentX: function (parent, position, offset) {
+      	var elt = $(id);
+      	elt.parent = parent;
+      	var width = $(parent).width;
+      	var o = offset ? offset : 0;
+      	switch (position) {
+      	case "center":
+      		elt.x = width / 2 + o - elt.width / 2;
+      		break;
+      	case "left":
+      		elt.x = 0 + o;
+      		break;
+      	case "right":
+      		elt.x = width + o - elt.width
+      	}
+      },
+      alignParentY: function (parent, position, offset) {
+      	var elt = $(id);
+      	elt.parent = parent;
+      	var height = $(parent).height;
+      	var o = offset ? offset : 0;
+      	switch (position) {
+      	case "center":
+      		elt.y = height / 2 + o - elt.height / 2;
+      		break;
+      	case "top":
+      		elt.y = 0 + o;
+      		break;
+      	case "bottom":
+      		elt.y = height + o - elt.height
+      	}
+      },
+      alignParent: function (parent, position, x, y) {
+      	var elt = returnObject;
+      	switch (position) {
+      	case "center":
+      		elt.alignParentX(parent, "center", x);
+      		elt.alignParentY(parent, "center", y);
+      		break;
+      	case "center-right":
+      	case "right-center":
+      		elt.alignParentX(parent, "right", x);
+      		elt.alignParentY(parent, "center", y);
+      		break;
+      	case "center-left":
+      	case "left-center":
+      		elt.alignParentX(parent, "left", x);
+      		elt.alignParentY(parent, "center", y);
+      		break;
+      	case "center-top":
+      	case "top-center":
+      		elt.alignParentX(parent, "center", x);
+      		elt.alignParentY(parent, "top", y);
+      		break;
+      	case "center-bottom":
+      	case "bottom-center":
+      		elt.alignParentX(parent, "center", x);
+      		elt.alignParentY(parent, "bottom", y);
+      		break;
+      	case "top-right":
+      	case "right-top":
+      		elt.alignParentX(parent, "right", x);
+      		elt.alignParentY(parent, "top", y);
+      		break;
+      	case "top-left":
+      	case "left-top":
+      		elt.alignParentX(parent, "left", x);
+      		elt.alignParentY(parent, "top", y);
+      		break;
+      	case "bottom-right":
+      	case "right-bottom":
+      		elt.alignParentX(parent, "right", x);
+      		elt.alignParentY(parent, "bottom", y);
+      		break;
+      	case "bottom-left":
+      	case "left-bottom":
+      		elt.alignParentX(parent, "left", x);
+      		elt.alignParentY(parent, "bottom", y)
+      	}
+      }
   	};
   	returnObject.mousedown = function (e) {
   		collectXY(e);
