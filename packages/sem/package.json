@@ -1,7 +1,7 @@
 {
   "name":"sem",
   "description":"UI library for modifying screen elements",
-  "version":"1.2.0",
+  "version":"1.6.0",
   "build":"window",
   "author":"IMF",
   "keywords":["UI","screen","element","manipulation","design","layout"],
