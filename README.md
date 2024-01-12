@@ -42,7 +42,7 @@ Import PKG to AppLab project from the following library ID: **ptsuaZ24gmxeSzHQSQ
 
 PKG default settings can be overwritten with ```PKG.Settings(settings)``` function. Expects an object with three optional properties as argument:
 - ```settings.keyValues [false || true]```
-When true, sets key values indicating package source url. for faster package loading speeds. The key is set as "package_href_*<package-name>*:*<version>*". Default value is false.
+When true, sets key values indicating package source url for faster loading speeds. This is useful during the project development phase, but not for the published project. The key is set as "package_href_*<package-name>*:*<version>*". Default value is false.
 - ```settings.throwError [false || true || "console"]```
 When true, throws an error when package cannot be loaded. When value is "console", prints the error message to the console. Default value is false.
 - ```settings.onError [Function]```
@@ -50,7 +50,11 @@ Called whenever an error occurs, with the error message as argument.
     
 ### Using PKG
 
+#### Types of import
+
 There are two ways to import a PKG package: local and global import. For this purpose, PKG creates two functions in the global scope: ```package()``` and ```require()```. I used ```package``` because it is a reserved word and AppLab doesn't show a yellow triangle warning, and somehow ```require``` doesn't either, even though it isn't defined in the AppLab interpreter.
+
+#### Local import
 
 A local import is done with ```require(name, version?)```. If version is left empty, requests the latest version of the package. Returns the an object with the package functions, and an ```onload``` function called when package is loaded.
 
@@ -60,9 +64,7 @@ Here is an example of locally importing a package called [sem](https://github.co
 var sem = require("sem"); // import latest version of package "sem" version
 sem.onload = function(){ // when sem is loaded
   // the code here will execute when sem has been loaded
-  // at this point sem == {$, Template}
-  sem.$; // [Function]
-  sem.Template; // [Function]
+  sem.$("screen1").backgroundColor = "red";
 }
 ```
 
@@ -70,7 +72,7 @@ Notice, sem.$ or sem.Template will return undefined when referred to before pack
 
 ```
 var sem = require("sem");
-sem.$; // undefined as package hasn't loaded yet
+sem.$("screen1").backgroundColor = "red"; // throws an error as package hasn't loaded yet
 ```
 
 This is why sem.onload must be used. The most-readable solution is as following:
@@ -80,23 +82,41 @@ var sem = require("sem");
 sem.onload = main;
 
 function main(){
-  sem.$;
-  sem.Template;
+  sem.$("screen1").backgroundColor = "red";
 }
 ```
 
-Packages with ```"type":"window"``` support global importing. The functions in globally imported packages are defined in the global scope. Global importing is done with ```package()```, which internally calls ```require()```. The only difference is that ```package()``` adds the functions to the global scope, and only returns the ```onload``` property.
+#### Global import
+
+Packages with ```"type":"window"``` support global importing. The functions in globally imported packages are defined in the global scope. Global importing is done with ```package(name, version?)```, which internally calls ```require()```. The only difference is that ```package()``` adds the functions to the global scope, and only returns the ```onload``` property.
 
 ```
 package("sem").onload = main;
 
 function main(){
-  $;
+  $("screen1").backgroundColor = "red";
 }
 ```
 
+```package()``` supports an array argument, loading all packages with one call, reducing the code in your project. All package functions will be added to the global space with the same identifiers.
 
+```
+package(["sem","base64"]).onload = main;
 
+function main(){
+    $("screen1").backgroundColor = "red";
+    stringToBase64("Hello World");
+}
+```
 
+#### Versions
 
+```require()``` and ```package()``` can load earlier versions of a package, if an optional version argument is passed.
 
+```
+require("sem","1.0.0"); // Loads the first version of sem
+package("sem",1.0.0); // Global equivalent of above local import
+package(["sem:1.6.0","base64:1.0.0"]); // If argument to package is an array, package name and version are seperated by a colon
+```
+
+If ```settings.keyValues``` is ```true```, the url of the version is stored as a key value.
