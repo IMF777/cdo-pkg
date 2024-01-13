@@ -1,0 +1,10 @@
+{
+  "name":"base64",
+  "description":"Library for encoding and decoding base64 strings",
+  "version":"1.0.0",
+  "build":"window",
+  "author":"IMF",
+  "keywords":["base64","binary","encode","decode","string"],
+  "dependencies":[],
+  "dependants":[]
+}
