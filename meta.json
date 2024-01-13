@@ -1,0 +1,12 @@
+{
+  "name":"PKG",
+  "description":"AppLab package loader",
+  "version":"1.0.0",
+  "author":"IMF",
+  "released":"13-01-2024",
+  "updated":"13-01-2024",
+  "library_id":"VLgKQPPaJ-UtEYLl0RmWlixNgK092ZDJ8Sc2e-K7dQA",
+  "project_id":"applab/VLgKQPPaJ-UtEYLl0RmWlixNgK092ZDJ8Sc2e-K7dQA",
+  "readme":"https://github.com/IMF777/cdo-pkg/main/README.md",
+  "changelog":"https://github.com/IMF777/cdo-pkg/main/CHANGELOG.md"
+}
