@@ -1,6 +1,6 @@
 {
   "name":"sem",
-  "description":"UI library for modifying screen elements",
+  "description":"UI package for modifying screen elements",
   "version":"1.6.0",
   "build":"window",
   "author":"IMF",
