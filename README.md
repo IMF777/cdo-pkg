@@ -2,11 +2,26 @@
 
 PKG is a code.org AppLab project for importing libraries or frameworks, called packages. Each package is stored on github, and imported via requests to [raw.githubusercontent.com](https://raw.githubusercontent.com) using ```startWebRequest()```. Upon recieval, package is then evaluated and returned.
 
+[Why PKG was created](#why-pkg-was-created)
+- [The problem with cdo libraries](#the-problem-with-cdo-libraries)
+- [About http requests](#about-http-requests)
+- [The workaround](#the-workaround)
+- [Creating PKG](#creating-pkg)
+
+[How to use](#how-to-use)
+- [Import PKG](#import-pkg)
+- [Setting up PKG settings](#setting-up-pkg-settings)
+- [Using PKG](#using-pkg)
+  - [Types of import](#types-of-import)
+  - [Local import](#local-import)
+  - [Global import](#global-import)
+  - [Versions](#versions)
+
 ## Why PKG was created
 
 ### The problem with cdo libraries
 
-Code.org does allow the export and import of libraries, but with restrictions. Libraries are imported via a unique library ID, and cannot be published to the public. Moreover, there is a specific size limit for each library, and once it exceeds the limit it is no longer publishable. The solution is to create multiple libraries stemming from the same framework and somehow connect them.
+Code.org does allow the export and import of libraries, but with restrictions. Libraries are imported via a unique library ID, can be imported by anyone with the ID, but there is no public space for them to be published. Moreover, there is a specific size limit for each library, and once it exceeds the limit it is no longer publishable. The solution is to create multiple libraries stemming from the same framework and somehow connect them.
 
 However, this creates a disorganized project space with lots of otherwise unneccessary libraries. Furthermore, it's painstaking to copy-paste library IDs and wait for the browser to refresh per each library import. This problem is emphasized when each project needs the same essential libraries and the process needs to be repeated.
 
@@ -22,21 +37,21 @@ However, there is an EASY workaround to store and get files.
 
 AppLab has a function called ```startWebRequest()``` that makes an http request to the url given as paramater, and returns the content recieved. Unfortunately, it's not possible to access every site and only a few domains are authorized.
 
-Many domains listed as authorized in the documentation, are not actually accessible when calling the function, for example [dweet.io](https://dweet.io). The actual list of allowed domains is returned as the content parameter of ```startWebRequest()```, in the case of an unauthorized domain being requested.
+Many domains listed as authorized in the documentation, are not actually accessible when calling the function, for example the earlier-accessible [dweet.io](https://dweet.io). The actual list of allowed domains is returned as the content parameter of ```startWebRequest()```, in the case of an unauthorized domain being requested.
 
-On this list, I found the domain [api.github.com](https://api.github.com), which serves github repository data, and this is what gave me the idea. I created a repository to store .js files, and used ```startWebRequest()``` to make api calls to the file. The file contents are encoded in base64, however, and I had to make a function that decoded base64 into utf.
+Anyway, the domain [api.github.com](https://api.github.com) which serves github repository data, was listed in the documentation, and this is what gave me the idea. I created a repository to store .js files, and used ```startWebRequest()``` to make api calls to the file. The file contents are encoded in base64, however, and I had to make a function that decoded base64 into utf.
 
 ### Creating PKG
 
-After that, I started making the PKG library. My initial version was designed to support package versioning logic (SemVer), dependency logic (for faster loads), package store and more such features. I made good progress, but got stuck in the process of writing dependency logic. I kind of lost interest in PKG then, and the library stayed untouched for a while.
+After that, I started making the PKG library. My initial version was designed to support package versioning logic (SemVer), dependency logic (for faster loads), package store and more such features. I made good progress, but got stuck in the process of writing dependency logic. I kind of abandoned PKG, and the library stayed untouched for a while.
 
-Months later, after seeing PKG appear in "my projects", I started recreating it with a new structure from scratch. This time, I was more realistic than the previous attempt. I decided version logic was largely unneccessary for AppLab libraries. And I also used [raw.githubusercontent.com](https://raw.githubusercontent.com), which served raw file content, instead of encoded base64 strings. The library became smaller and more organized.
+Months later, seeing PKG appear in "my projects" rekindled my interest and I started recreating it with a new structure from scratch. This time, I was more realistic than the previous attempt. I decided version logic was largely unneccessary for AppLab libraries. And I also used [raw.githubusercontent.com](https://raw.githubusercontent.com), which served raw file content, instead of encoded base64 strings. The library became smaller and more organized.
 
 ## How to use
 
 ### Import PKG
 
-Import PKG to AppLab project from the following library ID: **ptsuaZ24gmxeSzHQSQFIFHdd36mNl4HHKa11YoOTXDY**
+Import PKG to AppLab project from the following library ID: **VLgKQPPaJ-UtEYLl0RmWlixNgK092ZDJ8Sc2e-K7dQA**
 
 ### Setting up PKG settings
 
@@ -47,6 +62,16 @@ When true, sets key values indicating package source url for faster loading spee
 When true, throws an error when package cannot be loaded. When value is "console", prints the error message to the console. Default value is false.
 - ```settings.onError [Function]```
 Called whenever an error occurs, with the error message as argument.
+
+```
+PKG.Settings({
+    keyValues:true,
+    throwError:"console",
+    onError:function(errorMsg){
+        write(errorMsg)
+    }
+});
+```
     
 ### Using PKG
 
@@ -108,6 +133,8 @@ function main(){
     stringToBase64("Hello World");
 }
 ```
+
+Sometimes ```package()``` might choose to not load a certain package, even if it has ```type:window```. This is because your project has an older version of PKG. That's why it's important to keep the main library always updated.
 
 #### Versions
 
