@@ -4,9 +4,23 @@ function Settings(opt){
   window._package_settings.onError = opt.onError || function(){};
 }
 
+function CheckForUpdate(f){
+  var version = "1.1.0";
+  startWebRequest("https://raw.githubusercontent.com/IMF777/cdo-pkg/main/meta.json",function(s,t,c){
+    var meta = JSON.parse(c);
+    if (meta.version != version){
+      var msg = "[PKG] Newer version "+meta.version+" available";
+      if (!f){
+        console.log(msg);
+      } else {
+        f(true,msg);
+      }
+    }
+  });
+}
+
 
 (function(){
-  
   
   window._package_settings = {keyValues:false,throwError:false,onError:function(){}};
   
@@ -28,7 +42,7 @@ function Settings(opt){
     return obj;
   }
   
-  var windowbuild = ["sem"];
+  var windowbuild = ["sem","base64"];
   
   function handleError(msg){
     if (win.throwError === true){
