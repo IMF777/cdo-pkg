@@ -1,6 +1,6 @@
 # Sem Documentation
 
-Sem is a small, compact UI library for modifying on-screen elements with profound ease. Access or modify elements as if they were JavaScript objects.
+Sem is a small, compact UI package for modifying on-screen elements with profound ease. Access or modify elements as if they were JavaScript objects.
 
 Sem has a build of ```window```. It supports both local and global importing.
 
