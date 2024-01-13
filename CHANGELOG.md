@@ -9,8 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 
 - Added method to check for PKG updates
+- Added base64 package
 
 ## [1.0.0] - 2024-01-13
+
+### Added
+
+- Added sem package
 
 ### Changed
 
