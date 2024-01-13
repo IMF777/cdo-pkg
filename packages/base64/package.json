@@ -1,6 +1,6 @@
 {
   "name":"base64",
-  "description":"Library for encoding and decoding base64 strings",
+  "description":"Encoding and decoding base64 strings",
   "version":"1.0.0",
   "build":"window",
   "author":"IMF",
