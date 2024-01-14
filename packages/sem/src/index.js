@@ -1,5 +1,5 @@
 (function(){
-  var $ = function (id) {
+    var $ = function (id) {
   	id = id.replace(/\\s+/g, "");
   	var x;
   	var y;
@@ -7,6 +7,8 @@
   	var dragging = false;
   	var yr = 0;
   	var xr = 0;
+    var dblClick;
+    var c = 0;
   
   	function collectXY(e) {
   		if (draggable) {
@@ -398,6 +400,11 @@
   				draggable = false
   			} else {
   				draggable = true;
+        	returnObject.mousedown = function (e) {
+        		collectXY(e);
+        		x = e.x;
+        		y = e.y
+        	};
   				$(elt).mousemove = function (e) {
   					drag(e)
   				};
@@ -407,7 +414,18 @@
   				}
   			}
   		},
-  		dblClick: function () {},
+  		set dblClick(f) {
+  		  dblClick = f;
+      	returnObject.click = function (e) {
+      		c++;
+      		if (c === 2) {
+      			dblClick(e)
+      		}
+      		setTimeout(function () {
+      			c = 0
+      		}, 250)
+      	};
+      },
   		collides: function (elt, offset) {
   			var offsetX;
   			var offsetY;
@@ -636,21 +654,6 @@
       	})
       }
   	};
-  	returnObject.mousedown = function (e) {
-  		collectXY(e);
-  		x = e.x;
-  		y = e.y
-  	};
-  	var c = 0;
-  	returnObject.click = function (e) {
-  		c++;
-  		if (c === 2) {
-  			returnObject.dblClick(e)
-  		}
-  		setTimeout(function () {
-  			c = 0
-  		}, 250)
-  	};
   	return returnObject
   };
   var Template = function (props) {
@@ -670,8 +673,5 @@
     		if (value.callback) value.callback($(array[i]))
     	}
     };
-  }
-
-  return {$:$,Template:Template};
-  
+  } 
 })();
