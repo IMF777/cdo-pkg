@@ -4,6 +4,8 @@ Sem is a small, compact UI package for modifying on-screen elements with profoun
 
 Sem has a build of ```window```. It supports both local and global importing.
 
+**Current version:** 1.7.0
+
 ## Importing Sem
 
 ### Global import
