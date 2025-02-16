@@ -1,0 +1,10 @@
+{
+  "name":"inbox",
+  "description":"Sending and recieving messages across multiple projects.",
+  "version":"1.0.0",
+  "build":"window",
+  "author":"IMF",
+  "keywords":["inbox","message","send","recieve","load"],
+  "dependencies":[],
+  "dependants":[]
+}
